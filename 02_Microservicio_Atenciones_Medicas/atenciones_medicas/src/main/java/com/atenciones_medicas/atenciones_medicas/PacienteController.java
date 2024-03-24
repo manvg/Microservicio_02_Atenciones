@@ -70,6 +70,9 @@ public class PacienteController {
     //Obtener lista de pacientes por rango de fecha en la que fue atendido
     @GetMapping("/pacientes/atencion/rango-fecha/{fechaDesde}/{fechaHasta}")
     public List<Paciente> getPacientesRangoFecha(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaDesde, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaHasta){
+        if (fechaHasta.isBefore(fechaDesde)) {
+            throw new CustomException("Rango de fecha no válido.");
+        }
         List<Paciente> lstRetorno = new ArrayList<>();
         for(Paciente paciente : lstPacientes){
             if (!paciente.getAtencionMedica().getFechaAtencion().isBefore(fechaDesde) && !paciente.getAtencionMedica().getFechaAtencion().isAfter(fechaHasta)) {
