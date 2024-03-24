@@ -59,7 +59,7 @@ public class PacienteController {
     @GetMapping("/pacientes/{rut}")
     public Paciente getPacientesByRut(@PathVariable String rut){
         for(Paciente paciente : lstPacientes){
-            if (paciente.getRut() == rut) {
+            if (paciente.getRut().equals(rut)) {
                 return paciente;
             }
         }
